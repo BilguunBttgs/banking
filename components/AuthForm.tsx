@@ -34,13 +34,13 @@ const AuthForm = ({ type }: { type: string }) => {
     setLoading(true);
     try {
       if (type === "sign-in") {
-        // const res = await signIn({
-        //   email: data.email,
-        //   password: data.password,
-        // });
-        // if (res) {
-        //   router.push("/");
-        // }
+        const res = await signIn({
+          email: data.email,
+          password: data.password,
+        });
+        if (res) {
+          router.push("/");
+        }
       }
       if (type === "sign-up") {
         const newUser = await signUp(data);
@@ -48,7 +48,7 @@ const AuthForm = ({ type }: { type: string }) => {
         setUser(newUser);
       }
     } catch (error) {
-      console.log(error);
+      console.log("ERROR IN SIGN UP FUNCTION", error);
     } finally {
       setLoading(false);
     }
