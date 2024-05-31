@@ -37,13 +37,13 @@ const AuthForm = ({ type }: { type: string }) => {
       const userData = {
         firstName: data.firstName!,
         lastName: data.lastName!,
-        address: data.address!,
+        address1: data.address1!,
         email: data.email!,
         password: data.password!,
         state: data.state!,
         city: data.city!,
         postalCode: data.postalCode!,
-        dob: data.dob!,
+        dateOfBirth: data.dateOfBirth!,
         ssn: data.ssn!,
       };
       if (type === "sign-in") {
@@ -123,7 +123,7 @@ const AuthForm = ({ type }: { type: string }) => {
                   <CustomInput
                     control={form.control}
                     label="Address"
-                    name="address"
+                    name="address1"
                     placeholder="Enter your address"
                   />
                   <CustomInput
@@ -150,7 +150,7 @@ const AuthForm = ({ type }: { type: string }) => {
                     <CustomInput
                       control={form.control}
                       label="Date of Birth"
-                      name="dob"
+                      name="dateOfBirth"
                       placeholder="yyyy-mm-dd"
                     />
                     <CustomInput
