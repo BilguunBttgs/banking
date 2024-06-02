@@ -12,24 +12,20 @@ import {
 import { plaidClient } from "../plaid";
 import { parseStringify } from "../utils";
 
-// import { getTransactionsByBankId } from "./transaction.actions";
+// import { getTransactionsByBankId } from "./transaction.action";
 import { getBanks, getBank } from "./user.action";
 
-// Get multiple bank accounts
 export const getAccounts = async ({ userId }: getAccountsProps) => {
   try {
-    // get banks from db
     const banks = await getBanks({ userId });
 
     const accounts = await Promise.all(
       banks?.map(async (bank: Bank) => {
-        // get each account info from plaid
         const accountsResponse = await plaidClient.accountsGet({
           access_token: bank.accessToken,
         });
         const accountData = accountsResponse.data.accounts[0];
 
-        // get institution info from plaid
         const institution = await getInstitution({
           institutionId: accountsResponse.data.item.institution_id!,
         });
@@ -63,19 +59,14 @@ export const getAccounts = async ({ userId }: getAccountsProps) => {
   }
 };
 
-// Get one bank account
 export const getAccount = async ({ appwriteItemId }: getAccountProps) => {
   try {
-    // get bank from db
     const bank = await getBank({ documentId: appwriteItemId });
 
-    // get account info from plaid
     const accountsResponse = await plaidClient.accountsGet({
       access_token: bank.accessToken,
     });
     const accountData = accountsResponse.data.accounts[0];
-
-    // get transfer transactions from appwrite
     // const transferTransactionsData = await getTransactionsByBankId({
     //   bankId: bank.$id,
     // });
@@ -92,7 +83,6 @@ export const getAccount = async ({ appwriteItemId }: getAccountProps) => {
     //   })
     // );
 
-    // get institution info from plaid
     const institution = await getInstitution({
       institutionId: accountsResponse.data.item.institution_id!,
     });
@@ -113,11 +103,9 @@ export const getAccount = async ({ appwriteItemId }: getAccountProps) => {
       subtype: accountData.subtype! as string,
       appwriteItemId: bank.$id,
     };
-
-    // sort transactions by date such that the most recent transaction is first
-    // const allTransactions = [...transactions, ...transferTransactions].sort(
-    //   (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
-    // );
+    const allTransactions = [...transactions].sort(
+      (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
+    );
 
     return parseStringify({
       data: account,
