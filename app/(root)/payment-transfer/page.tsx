@@ -1,5 +1,5 @@
 const Transfer = () => {
-  return <div>Transfer</div>;
+  return <section className="payment-transfer"></section>;
 };
 
 export default Transfer;
