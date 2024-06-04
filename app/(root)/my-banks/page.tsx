@@ -20,7 +20,7 @@ const MyBanksPage = async () => {
           {accounts &&
             accounts.data.map((a: Account) => (
               <BankCard
-                key={accounts.$id}
+                key={accounts.id}
                 account={a}
                 userName={loggedIn.firstName}
               />
