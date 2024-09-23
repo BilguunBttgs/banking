@@ -6,8 +6,8 @@ import { authFormSchema } from "@/lib/utils";
 
 const formSchema = authFormSchema("sign-up");
 interface ICustomInput {
-  control: Control<z.infer<typeof formSchema>>;
   label: string;
+  control: Control<z.infer<typeof formSchema>>;
   name: FieldPath<z.infer<typeof formSchema>>;
   placeholder: string;
 }
